@@ -1,0 +1,35 @@
+.wrapper-register {
+  display: flex;
+  flex-direction: column;
+
+  width: 476px;
+
+  margin: 0 auto;
+
+  padding: 30px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__control {
+    font-size: 16px;
+    line-height: 1.4;
+
+    margin-bottom: 15px;
+
+    padding: 15px 20px;
+  }
+
+  &__button {
+    font-size: 16px;
+    line-height: 1.4;
+    height: 52px;
+  }
+}
