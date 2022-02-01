@@ -38,9 +38,9 @@ export const RegisterView = () => {
 
           const result = await API.fetchRegisterUser(sendData);
           const { data } = result;
-          console.log("user id:", data);
-          navigate(`/addCode/${data.id}`);
+          // console.log("user id:", data);
           actions.resetForm();
+          navigate(`/add-code/${data.id}`);
         }}
       >
         {(props) => (

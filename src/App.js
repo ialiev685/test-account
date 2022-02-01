@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<RegisterView />} />
-        <Route path="/addCode/:id" element={<AddCodeView />} />
+        <Route path="/add-code/:id" element={<AddCodeView />} />
       </Routes>
     </div>
   );
