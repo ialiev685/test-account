@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 //components
 import { Container } from "../components/Container";
 import { Navigation } from "../components/Navigation";
 import { Profile } from "../components/Profile";
+import { Modal } from "../components/Modal";
 
 export const Home = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal((prevState) => !prevState);
+  };
+
   return (
     <div className="home">
       <header className="home__header">
@@ -13,9 +20,10 @@ export const Home = () => {
       <div className="home__wrapperProfile">
         <Navigation />
         <Container className={"login"}>
-          <Profile />
+          <Profile onModal={toggleModal} />
         </Container>
       </div>
+      {showModal && <Modal onModal={toggleModal} />}
     </div>
   );
 };

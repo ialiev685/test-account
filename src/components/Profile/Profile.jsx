@@ -2,7 +2,7 @@ import React from "react";
 //style
 import "./Profile.scss";
 
-export const Profile = () => {
+export const Profile = ({ onModal }) => {
   return (
     <div className="profile">
       <ul className="profile__list">
@@ -12,10 +12,14 @@ export const Profile = () => {
           </button>
         </li>
         <li className="profile__item">
-          <button className="buttonProfile">Личные данные</button>
+          <button className="buttonProfile" onClick={onModal}>
+            Личные данные
+          </button>
         </li>
         <li className="profile__item">
-          <button className="buttonProfile">Навыки</button>
+          <button className="buttonProfile" onClick={onModal}>
+            Навыки
+          </button>
         </li>
       </ul>
     </div>
