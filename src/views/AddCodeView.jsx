@@ -5,6 +5,8 @@ import NumberFormat from "react-number-format";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 //api
 import { API } from "../services";
+//component
+import { Container } from "../components/Container";
 
 export const AddCodeView = () => {
   const [code, setCode] = useState("");
@@ -39,27 +41,21 @@ export const AddCodeView = () => {
     }
   }, [code, code.length, navigate, userId]);
 
-  // const fetchConfirmEmail = async (data) => {
-  //   const result = await API.fetchConfirmEmail(data);
-
-  //   if (result?.status === 200) {
-  //     navigate();
-  //   }
-  // };
-
   return (
-    <div>
-      <h2>Введите код подтверждения</h2>
-      <p>Мы отправили письмо на {email}</p>
-      <NumberFormat
-        format="###-###"
-        placeholder="000-000"
-        onValueChange={(values) => {
-          // console.log("val", values);
-          const { formattedValue } = values;
-          setCode(formattedValue.trim());
-        }}
-      />
-    </div>
+    <Container>
+      <div>
+        <h2>Введите код подтверждения</h2>
+        <p>Мы отправили письмо на {email}</p>
+        <NumberFormat
+          format="###-###"
+          placeholder="000-000"
+          onValueChange={(values) => {
+            // console.log("val", values);
+            const { formattedValue } = values;
+            setCode(formattedValue.trim());
+          }}
+        />
+      </div>
+    </Container>
   );
 };

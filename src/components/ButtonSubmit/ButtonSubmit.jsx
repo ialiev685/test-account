@@ -3,7 +3,7 @@ import "./ButtonSubmit.scss";
 
 export const ButtonSubmit = ({ className, caption = "кнопка" }) => {
   return (
-    <button className={`button ${className}`} type="submit">
+    <button className={`buttonSubmit ${className}`} type="submit">
       {caption}
     </button>
   );

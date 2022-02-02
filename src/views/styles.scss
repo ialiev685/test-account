@@ -53,10 +53,33 @@
     color: #1f1a2d;
   }
 
-  &__dataProcessing {
-  }
-
   &__button {
     margin-top: 15px;
+  }
+}
+
+.home {
+  background-color: #3549fd;
+  height: 100vh;
+
+  &__header {
+    height: 66px;
+    width: 695px;
+    background-color: #ffffff;
+
+    padding: 24px 30px;
+
+    border-bottom: 1px solid rgba(160, 168, 200, 0.5);
+  }
+
+  &__logo {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  &__wrapperProfile {
+    display: flex;
+    justify-content: flex-start;
   }
 }
