@@ -1,0 +1,60 @@
+.email {
+  position: relative;
+
+  height: 52px;
+
+  &__control {
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 600;
+
+    width: 100%;
+    display: block;
+
+    padding: 15px 20px;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    outline: none;
+
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  &__control:focus-within {
+    border-color: #4378ff;
+  }
+
+  &__label {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+
+    font-weight: 500;
+
+    transition-property: top, left, transform;
+    transition-duration: 150ms;
+    transition-timing-function: linear;
+
+    color: #847e95;
+  }
+
+  &__control:focus ~ &__label {
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+
+    color: #4378ff;
+  }
+
+  &__label.email__label--up {
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+
+    color: #4378ff;
+  }
+  &__label.email__label--down {
+    top: 15px;
+    left: 20px;
+  }
+}

@@ -1,12 +1,6 @@
-.wrapper-register {
+.wrapper-form {
   display: flex;
   flex-direction: column;
-
-  width: 476px;
-
-  margin: 0 auto;
-
-  padding: 30px;
 
   &__form {
     display: flex;
@@ -16,20 +10,53 @@
   &__title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 36px;
   }
 
-  &__control {
-    font-size: 16px;
+  &__name,
+  &__link {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: #1f1a2d;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__input {
+    margin-bottom: 36px;
+  }
+
+  &__mailing,
+  &__dataProcessing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 15px;
+  }
+
+  &__label {
+    width: 380px;
+
+    font-weight: 400;
+    font-size: 14px;
     line-height: 1.4;
+    letter-spacing: 0.02em;
 
-    margin-bottom: 15px;
+    color: #1f1a2d;
+  }
 
-    padding: 15px 20px;
+  &__dataProcessing {
   }
 
   &__button {
-    font-size: 16px;
-    line-height: 1.4;
-    height: 52px;
+    margin-top: 15px;
   }
 }

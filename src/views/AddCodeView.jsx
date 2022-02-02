@@ -2,20 +2,26 @@ import React, { useState, useEffect } from "react";
 //format number
 import NumberFormat from "react-number-format";
 //router
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 //api
 import { API } from "../services";
 
 export const AddCodeView = () => {
   const [code, setCode] = useState("");
   const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
+
   const params = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   // console.log("params", params);
 
   useEffect(() => {
     const { id } = params;
     setUserId(id);
-  }, [params]);
+    const { email } = location.state;
+    setEmail(email);
+  }, [location.state, params]);
 
   useEffect(() => {
     if (code.length === 7) {
@@ -24,22 +30,27 @@ export const AddCodeView = () => {
         confirmationCode: code,
       };
       // console.log("cofirmData", cofirmData);
-      fetchConfirmEmail(cofirmData);
+      // fetchConfirmEmail(cofirmData);
+      API.fetchConfirmEmail(cofirmData).then((respone) => {
+        if (respone?.status === 200) {
+          navigate("/activate-profile", { state: { ...cofirmData } });
+        }
+      });
     }
-  }, [code, code.length, userId]);
+  }, [code, code.length, navigate, userId]);
 
-  const fetchConfirmEmail = async (data) => {
-    const result = await API.fetchConfirmEmail(data);
+  // const fetchConfirmEmail = async (data) => {
+  //   const result = await API.fetchConfirmEmail(data);
 
-    if (result?.status === 200) {
-      console.log("Успех!!!");
-    }
-  };
+  //   if (result?.status === 200) {
+  //     navigate();
+  //   }
+  // };
 
   return (
     <div>
       <h2>Введите код подтверждения</h2>
-      <p>Мы отправили письмо на masha@zenina.com</p>
+      <p>Мы отправили письмо на {email}</p>
       <NumberFormat
         format="###-###"
         placeholder="000-000"
