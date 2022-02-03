@@ -5,14 +5,13 @@ import { Formik } from "formik";
 import { EmailControl } from "../components/EmailControl";
 import { PasswordControl } from "../components/PasswordControl";
 import { ButtonSubmit } from "../components/ButtonSubmit";
+import { Container } from "../components/Container";
 //router
 import { Link, useNavigate } from "react-router-dom";
 //style
 import "./styles.scss";
 //api
 import { API } from "../services";
-//component
-import { Container } from "../components/Container";
 
 export const LoginView = () => {
   const navigate = useNavigate();
@@ -42,8 +41,9 @@ export const LoginView = () => {
             const result = await API.fetchLogin(sendData);
             // console.log("login", result);
             const { data } = result;
+
             if (data) {
-              localStorage.setItem("token", JSON.stringify(data.token));
+              localStorage.setItem("token", data.token);
               actions.resetForm();
 
               navigate("/home");

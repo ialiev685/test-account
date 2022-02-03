@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //modal portal
 import { createPortal } from "react-dom";
 //styles
@@ -8,7 +8,7 @@ import { ReactComponent as ArrowIcon } from "../../icons/arrow.svg";
 
 const modalRoot = document.getElementById("modal-root");
 
-export const Modal = ({ onModal }) => {
+export const Modal = ({ onModal, children }) => {
   return createPortal(
     <div className="overlay">
       <div className="modal">
@@ -19,6 +19,7 @@ export const Modal = ({ onModal }) => {
           </button>
           <h3 className="modal__title">Личные данные</h3>
         </div>
+        <div className="modal__body">{children}</div>
       </div>
     </div>,
     modalRoot

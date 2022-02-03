@@ -4,6 +4,7 @@ import { Container } from "../components/Container";
 import { Navigation } from "../components/Navigation";
 import { Profile } from "../components/Profile";
 import { Modal } from "../components/Modal";
+import { FormPersonalData } from "../components/FormPersonalData";
 
 export const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,7 +24,11 @@ export const Home = () => {
           <Profile onModal={toggleModal} />
         </Container>
       </div>
-      {showModal && <Modal onModal={toggleModal} />}
+      {showModal && (
+        <Modal onModal={toggleModal}>
+          <FormPersonalData />
+        </Modal>
+      )}
     </div>
   );
 };

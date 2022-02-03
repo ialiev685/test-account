@@ -1,0 +1,25 @@
+.wrapper-formPerson {
+  &__input {
+    height: 54px;
+    width: 100%;
+
+    padding: 15px 20px;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+
+    color: #989898;
+
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    outline: none;
+  }
+
+  &__input.wrapper-formPerson__input--bold::placeholder {
+    font-weight: 800;
+
+    color: #000000;
+  }
+}

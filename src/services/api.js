@@ -1,6 +1,13 @@
 const axios = require("axios");
 
 const BASE_URL = "https://test.it-planet.org/sso/";
+const BASE_URL_LOCAL = "https://test.it-planet.org/location/";
+
+const token = {
+  set(token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  },
+};
 
 export const fetchRegisterUser = async (data) => {
   try {
@@ -35,6 +42,31 @@ export const fetchActivateProfile = async (data) => {
 export const fetchLogin = async (data) => {
   try {
     const result = await axios.post(`${BASE_URL}signin`, data);
+
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchGetListCountry = async (validToken, data) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.post(`${BASE_URL_LOCAL}country`, data);
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchGetListStatus = async (validToken) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.get(
+      "https://test.it-planet.org/user/dict/person-status"
+    );
     return result;
   } catch (error) {
     console.log(error.message);
