@@ -1,5 +1,6 @@
 .wrapper-formPerson {
-  &__input {
+  &__input,
+  &__control {
     height: 54px;
     width: 100%;
 
@@ -17,10 +18,45 @@
     outline: none;
   }
 
+  &__input,
+  &__wrapperInput,
+  &__select,
+  &__text {
+    margin-bottom: 10px;
+  }
+
+  &__text {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: #1f1a2d;
+  }
+
   &__input::placeholder {
     color: #989898;
   }
 
+  &__wrapperInput {
+    position: relative;
+  }
+
+  &__iconDate {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+
+    pointer-events: none;
+  }
+
+  &__iconArrow {
+    position: absolute;
+    top: 21px;
+    right: 20px;
+    transform: rotate(-90deg);
+
+    pointer-events: none;
+  }
   // &__input.wrapper-formPerson__input--bold::placeholder {
   //   font-weight: 800;
 

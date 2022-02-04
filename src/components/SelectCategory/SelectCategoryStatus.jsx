@@ -5,7 +5,13 @@ import "./SelectCategory.scss";
 import { ReactComponent as ArrowIcon } from "../../icons/arrowSelect.svg";
 
 export const SelectCategoryStatus = (props) => {
-  const { value, onChange, id = "unknow", name = "unknow" } = props;
+  const {
+    value,
+    onChange,
+    id = "unknow",
+    name = "unknow",
+    className = "",
+  } = props;
 
   const [hiddenList, setHiddenList] = useState(true);
   const [currentValue, setCurrentValue] = useState({
@@ -66,7 +72,7 @@ export const SelectCategoryStatus = (props) => {
   };
 
   return (
-    <div ref={wrapperRef} className="select-category">
+    <div ref={wrapperRef} className={`select-category ${className}`}>
       <div onClick={handleShowList} className="select-category__header">
         <span
           className={`select-category__currentValue ${

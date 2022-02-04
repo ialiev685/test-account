@@ -9,8 +9,26 @@ import { ReactComponent as ArrowIcon } from "../../icons/arrow.svg";
 const modalRoot = document.getElementById("modal-root");
 
 export const Modal = ({ onModal, children }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === "Escape") {
+        onModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const handleBackdropClick = (e) => {
+    if (e.currentTarget === e.target) {
+      onModal();
+    }
+  };
+
   return createPortal(
-    <div className="overlay">
+    <div className="overlay" onClick={handleBackdropClick}>
       <div className="modal">
         <div className="modal__header">
           <button className="modal__buttonClose" onClick={onModal}>

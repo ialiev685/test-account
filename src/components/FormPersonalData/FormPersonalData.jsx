@@ -8,7 +8,12 @@ import { SelectCategoryStatus } from "../SelectCategory";
 import { PanelSearchNameCountry } from "../PanelSearchName";
 import { PanelSearchNameRegion } from "../PanelSearchName";
 import { PanelSearchNameCity } from "../PanelSearchName";
-
+//date
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+//icon
+import { ReactComponent as DateIcon } from "../../icons/date.svg";
+import { ReactComponent as ArrowSelect } from "../../icons/arrowSelect.svg";
 //style
 import "./FormPersonalData.scss";
 
@@ -44,10 +49,15 @@ export const FormPersonalData = () => {
     setData((prevState) => ({ ...prevState, ...value }));
   };
 
+  const inputDateProps = {
+    name: "date",
+    className: "wrapper-formPerson__control",
+  };
+
   return (
     <div className="wrapper-formPerson">
       <div className="wrapper-formPerson__title">
-        <p>
+        <p className="wrapper-formPerson__text">
           Если ты заполнишь это поле, то получишь возможности общаться с людьми,
           получать бонусы
         </p>
@@ -57,6 +67,7 @@ export const FormPersonalData = () => {
           surname: "",
           name: "",
           patronymic: "",
+          date: new Date(),
           country: "",
           region: "",
           city: "",
@@ -117,50 +128,78 @@ export const FormPersonalData = () => {
             {props.errors.patronymic && (
               <div id="feedback">{props.errors.patronymic}</div>
             )}
-            <SelectCategoryGender />
-            <SelectCategoryStatus />
+            <SelectCategoryGender className="wrapper-formPerson__select" />
+            <div className="wrapper-formPerson__wrapperInput">
+              <Datetime
+                dateFormat="DD.MM.YYYY"
+                timeFormat={false}
+                inputProps={inputDateProps}
+                initialValue={props.values.date}
+                onChange={(value) => {
+                  const e = {
+                    target: {
+                      value: value._d,
+                      id: "date",
+                      name: "date",
+                    },
+                  };
+                  props.handleChange(e);
+                }}
+                closeOnSelect={true}
+              />
+              <DateIcon className="wrapper-formPerson__iconDate" />
+            </div>
+            <SelectCategoryStatus className="wrapper-formPerson__select" />
+            <div className="wrapper-formPerson__wrapperInput">
+              <input
+                onClick={(e) => togglePanelSearchCountry(e.target.name)}
+                autoComplete="off"
+                name="country"
+                placeholder="Страна"
+                className="wrapper-formPerson__control"
+                onChange={props.handleChange}
+                // value={props.values.country}
+                value={data.country}
+              />
+              <ArrowSelect className="wrapper-formPerson__iconArrow" />
 
-            <input
-              onClick={(e) => togglePanelSearchCountry(e.target.name)}
-              autoComplete="off"
-              name="country"
-              placeholder="Страна"
-              className="wrapper-formPerson__input"
-              onChange={props.handleChange}
-              // value={props.values.country}
-              value={data.country}
-            />
+              {props.errors.country && (
+                <div id="feedback">{props.errors.country}</div>
+              )}
+            </div>
+            <div className="wrapper-formPerson__wrapperInput">
+              <input
+                onClick={(e) => togglePanelSearchRegion(e.target.name)}
+                autoComplete="off"
+                name="region"
+                placeholder="Регион"
+                className="wrapper-formPerson__control"
+                onChange={props.handleChange}
+                value={data.region}
+              />
+              <ArrowSelect className="wrapper-formPerson__iconArrow" />
 
-            {props.errors.country && (
-              <div id="feedback">{props.errors.country}</div>
-            )}
-
-            <input
-              onClick={(e) => togglePanelSearchRegion(e.target.name)}
-              autoComplete="off"
-              name="region"
-              placeholder="Регион"
-              className="wrapper-formPerson__input"
-              onChange={props.handleChange}
-              value={data.region}
-            />
-
-            {props.errors.region && (
-              <div id="feedback">{props.errors.region}</div>
-            )}
-            <input
-              onClick={(e) => togglePanelSearchCity(e.target.name)}
-              autoComplete="off"
-              name="city"
-              placeholder="Город"
-              className="wrapper-formPerson__input"
-              onChange={props.handleChange}
-              value={data.city}
-            />
-
-            {props.errors.city && <div id="feedback">{props.errors.city}</div>}
+              {props.errors.region && (
+                <div id="feedback">{props.errors.region}</div>
+              )}
+            </div>
+            <div className="wrapper-formPerson__wrapperInput">
+              <input
+                onClick={(e) => togglePanelSearchCity(e.target.name)}
+                autoComplete="off"
+                name="city"
+                placeholder="Город"
+                className="wrapper-formPerson__control"
+                onChange={props.handleChange}
+                value={data.city}
+              />
+              <ArrowSelect className="wrapper-formPerson__iconArrow" />
+              {props.errors.city && (
+                <div id="feedback">{props.errors.city}</div>
+              )}
+            </div>
             <ButtonSubmit
-              className="wrapper-form__button"
+              className="wrapper-formPerson__button"
               caption={"Сохранить"}
             />
           </form>

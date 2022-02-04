@@ -48,6 +48,12 @@ export const PanelSearchNameRegion = (props) => {
     }
   }, [fetchListRegion, query, token]);
 
+  const handleBackdropClick = (e) => {
+    if (e.currentTarget === e.target) {
+      onShow();
+    }
+  };
+
   const handleChoose = (e) => {
     const value = e.target.textContent.trim();
     const id = e.target.dataset.id;
@@ -61,7 +67,7 @@ export const PanelSearchNameRegion = (props) => {
   };
 
   return (
-    <div className="overlay-search">
+    <div className="overlay-search" onClick={handleBackdropClick}>
       <div className="panel-search">
         <div className="panel-search__header">
           <input
