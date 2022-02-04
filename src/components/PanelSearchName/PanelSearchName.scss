@@ -46,7 +46,6 @@
     line-height: 1.5;
     letter-spacing: 0.02em;
 
-    color: rgba(132, 126, 149, 0.5);
     color: #000000;
   }
 
@@ -77,7 +76,31 @@
   }
 
   &__body {
-    padding: 30px;
+    height: 324px;
+    overflow-y: scroll;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    padding: 15px 20px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+
+    color: #1f1a2d;
+
+    cursor: pointer;
+  }
+
+  &__item:hover {
+    background-color: rgba(91, 137, 255, 0.3);
   }
 }
 

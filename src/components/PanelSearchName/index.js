@@ -1,1 +1,3 @@
-export { PanelSearchName } from "./PanelSearchName.jsx";
+export { PanelSearchNameCountry } from "./PanelSearchNameCountry";
+export { PanelSearchNameRegion } from "./PanelSearchNameRegion";
+export { PanelSearchNameCity } from "./PanelSearchNameCity";

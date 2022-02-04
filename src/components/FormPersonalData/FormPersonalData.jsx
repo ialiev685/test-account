@@ -5,49 +5,44 @@ import { Formik } from "formik";
 import { ButtonSubmit } from "../ButtonSubmit";
 import { SelectCategoryGender } from "../SelectCategory";
 import { SelectCategoryStatus } from "../SelectCategory";
-import { PanelSearchName } from "../PanelSearchName";
+import { PanelSearchNameCountry } from "../PanelSearchName";
+import { PanelSearchNameRegion } from "../PanelSearchName";
+import { PanelSearchNameCity } from "../PanelSearchName";
 
 //style
 import "./FormPersonalData.scss";
-//api
-import { API } from "../../services";
 
-const initListSelect = {
-  country: [],
-  region: [],
-  city: [],
+const initDataPerson = {
+  country: "",
+  region: "",
+  city: "",
+  countryId: "",
+  regionCode: "",
 };
 
 export const FormPersonalData = () => {
-  const [queryCountry, setQueryCountry] = useState("");
-  const [listsSelect, setListsSelect] = useState(initListSelect);
-  const [showPanelSearch, setShowPanelSearch] = useState(false);
+  const [data, setData] = useState(initDataPerson);
+  const [showPanelSearchCountry, setShowPanelSearchCountry] = useState(false);
+  const [showPanelSearchRegion, setShowPanelSearchRegion] = useState(false);
+  const [showPanelSearchCity, setShowPanelSearchCity] = useState(false);
+  const [curGetLocation, setCurGetLocation] = useState("");
 
-  const togglePanelSearch = () => {
-    setShowPanelSearch((prevState) => !prevState);
+  const togglePanelSearchCountry = (name = "") => {
+    setCurGetLocation(name);
+    setShowPanelSearchCountry((prevState) => !prevState);
+  };
+  const togglePanelSearchRegion = (name = "") => {
+    setCurGetLocation(name);
+    if (data.countryId) setShowPanelSearchRegion((prevState) => !prevState);
+  };
+  const togglePanelSearchCity = (name = "") => {
+    setCurGetLocation(name);
+    setShowPanelSearchCity((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const query = {
-        name: "Ка",
-        languageCode: "RU",
-      };
-      API.fetchGetListCountry(token, query).then((response) => {
-        const { data: country } = response.data;
-
-        setListsSelect((prevState) => ({ ...prevState, country }));
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // const token = localStorage.getItem("token");
-    // if (token) {
-    //   API.fetchGetListStatus(token).then((response) => console.log(response));
-    // }
-  }, []);
+  const getDataLocation = (value) => {
+    setData((prevState) => ({ ...prevState, ...value }));
+  };
 
   return (
     <div className="wrapper-formPerson">
@@ -63,6 +58,8 @@ export const FormPersonalData = () => {
           name: "",
           patronymic: "",
           country: "",
+          region: "",
+          city: "",
         }}
         onSubmit={async (values, actions) => {
           //   console.log("val", values);
@@ -91,7 +88,7 @@ export const FormPersonalData = () => {
               autoComplete="off"
               placeholder="Фамилия"
               name="surname"
-              className="wrapper-formPerson__input wrapper-formPerson__input--bold"
+              className="wrapper-formPerson__input"
               onChange={props.handleChange}
               value={props.values.surname}
             />
@@ -102,7 +99,7 @@ export const FormPersonalData = () => {
               autoComplete="off"
               name="name"
               placeholder="Имя"
-              className="wrapper-formPerson__input wrapper-formPerson__input--bold"
+              className="wrapper-formPerson__input"
               onChange={props.handleChange}
               value={props.values.name}
             />
@@ -112,26 +109,56 @@ export const FormPersonalData = () => {
               autoComplete="off"
               name="patronymic"
               placeholder="Отчество"
-              className="wrapper-formPerson__input wrapper-formPerson__input--bold"
+              className="wrapper-formPerson__input "
               onChange={props.handleChange}
-              value={props.values.name}
+              value={props.values.patronymic}
             />
 
-            {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+            {props.errors.patronymic && (
+              <div id="feedback">{props.errors.patronymic}</div>
+            )}
             <SelectCategoryGender />
             <SelectCategoryStatus />
 
             <input
-              onClick={() => togglePanelSearch()}
+              onClick={(e) => togglePanelSearchCountry(e.target.name)}
               autoComplete="off"
               name="country"
               placeholder="Страна"
               className="wrapper-formPerson__input"
               onChange={props.handleChange}
-              value={props.values.country}
+              // value={props.values.country}
+              value={data.country}
             />
 
-            {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+            {props.errors.country && (
+              <div id="feedback">{props.errors.country}</div>
+            )}
+
+            <input
+              onClick={(e) => togglePanelSearchRegion(e.target.name)}
+              autoComplete="off"
+              name="region"
+              placeholder="Регион"
+              className="wrapper-formPerson__input"
+              onChange={props.handleChange}
+              value={data.region}
+            />
+
+            {props.errors.region && (
+              <div id="feedback">{props.errors.region}</div>
+            )}
+            <input
+              onClick={(e) => togglePanelSearchCity(e.target.name)}
+              autoComplete="off"
+              name="city"
+              placeholder="Город"
+              className="wrapper-formPerson__input"
+              onChange={props.handleChange}
+              value={data.city}
+            />
+
+            {props.errors.city && <div id="feedback">{props.errors.city}</div>}
             <ButtonSubmit
               className="wrapper-form__button"
               caption={"Сохранить"}
@@ -139,7 +166,30 @@ export const FormPersonalData = () => {
           </form>
         )}
       </Formik>
-      {showPanelSearch && <PanelSearchName onShow={togglePanelSearch} />}
+      {showPanelSearchCountry && (
+        <PanelSearchNameCountry
+          infoLocation={data}
+          curGetLocation={curGetLocation}
+          getDataLocation={getDataLocation}
+          onShow={togglePanelSearchCountry}
+        />
+      )}
+      {showPanelSearchRegion && (
+        <PanelSearchNameRegion
+          infoLocation={data}
+          curGetLocation={curGetLocation}
+          getDataLocation={getDataLocation}
+          onShow={togglePanelSearchRegion}
+        />
+      )}
+      {showPanelSearchCity && (
+        <PanelSearchNameCity
+          infoLocation={data}
+          curGetLocation={curGetLocation}
+          getDataLocation={getDataLocation}
+          onShow={togglePanelSearchCity}
+        />
+      )}
     </div>
   );
 };

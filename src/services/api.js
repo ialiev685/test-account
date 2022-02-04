@@ -54,6 +54,31 @@ export const fetchGetListCountry = async (validToken, data) => {
     token.set(validToken);
 
     const result = await axios.post(`${BASE_URL_LOCAL}country`, data);
+
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchGetListRegion = async (validToken, data) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.post(`${BASE_URL_LOCAL}region`, data);
+
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchGetListCity = async (validToken, data) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.post(`${BASE_URL_LOCAL}city`, data);
+
     return result;
   } catch (error) {
     console.log(error.message);
