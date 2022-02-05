@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 //style
 import "./Profile.scss";
-//context
-import { AuthContext } from "../../hoc";
 
-export const Profile = ({ onModal }) => {
-  const user = useContext(AuthContext);
-  console.log("profile", user);
-
+export const Profile = ({ onModal, user }) => {
   return (
     <div className="profile">
-      <h2 className="profile__title"></h2>
+      <h2 className="profile__title">
+        {user.firstname} {user.lastname}
+      </h2>
+      <p className="profile__text">
+        {user.location.city ? user.location.city : "город неизвестен­"}
+      </p>
       <ul className="profile__list">
         <li className="profile__item">
           <button className="buttonProfile buttonProfile--skills">

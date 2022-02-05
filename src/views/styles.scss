@@ -63,6 +63,9 @@
   height: 100vh;
 
   &__header {
+    display: flex;
+    align-items: center;
+
     height: 66px;
     width: 695px;
     background-color: #ffffff;
@@ -81,5 +84,48 @@
   &__wrapperProfile {
     display: flex;
     justify-content: flex-start;
+  }
+
+  &__avatar {
+    display: block;
+
+    border-radius: 50%;
+  }
+
+  &__login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 140px;
+
+    margin-left: 190px;
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: #1f1a2d;
+  }
+
+  &__buttonExit {
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #818697;
+
+    width: 60px;
+    height: 25px;
+
+    background-color: #ffffff;
+
+    color: #818697;
+    cursor: pointer;
+
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
   }
 }

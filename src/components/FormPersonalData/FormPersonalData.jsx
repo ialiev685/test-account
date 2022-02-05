@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 //api
 import { API } from "../../services";
 //form
@@ -18,6 +18,8 @@ import { ReactComponent as DateIcon } from "../../icons/date.svg";
 import { ReactComponent as ArrowSelect } from "../../icons/arrowSelect.svg";
 //style
 import "./FormPersonalData.scss";
+//helpers
+import { dateFormatter } from "../../helpers/dateFormatter";
 
 const initDataPerson = {
   country: "",
@@ -27,13 +29,15 @@ const initDataPerson = {
   regionCode: "",
 };
 
-export const FormPersonalData = () => {
+export const FormPersonalData = ({ user }) => {
   const [data, setData] = useState(initDataPerson);
   const [showPanelSearchCountry, setShowPanelSearchCountry] = useState(false);
   const [showPanelSearchRegion, setShowPanelSearchRegion] = useState(false);
   const [showPanelSearchCity, setShowPanelSearchCity] = useState(false);
   const [curGetLocation, setCurGetLocation] = useState("");
   const [listStatus, setListStatus] = useState([]);
+
+  const formikRef = useRef();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -58,6 +62,9 @@ export const FormPersonalData = () => {
   };
 
   const getDataLocation = (value) => {
+    const valueInput = Object.values(value)[0];
+
+    formikRef.current.setFieldValue(curGetLocation, valueInput);
     setData((prevState) => ({ ...prevState, ...value }));
   };
 
@@ -75,9 +82,10 @@ export const FormPersonalData = () => {
         </p>
       </div>
       <Formik
+        innerRef={formikRef}
         initialValues={{
-          surname: "",
-          name: "",
+          surname: user.lastname,
+          name: user.firstname,
           patronymic: "",
           date: new Date(),
           country: "",
@@ -85,7 +93,45 @@ export const FormPersonalData = () => {
           city: "",
         }}
         onSubmit={async (values, actions) => {
-          //   console.log("val", values);
+          console.log("val", values);
+
+          const dataSend = {
+            firstname: "Jon",
+            lastname: "Snow",
+            patronymic: "",
+            sex: 1,
+            birthDate: "1905-06-21",
+            personStatusId: 1,
+            languageCode: "RU",
+            location: {
+              languageCode: "RU",
+              country: {
+                code: "US",
+                currencyCodes: ["USD"],
+                name: "США",
+                wikiDataId: "Q30",
+              },
+              region: {
+                countryCode: "US",
+                fipsCode: "42",
+                isoCode: "PA",
+                name: "Пенсильвания",
+                wikiDataId: "Q1400",
+              },
+              city: {
+                id: 124815,
+                wikiDataId: "Q1134176",
+                type: "CITY",
+                city: "Калифорния",
+                name: "Калифорния",
+                regionCode: "PA",
+                countryCode: "Q30",
+              },
+            },
+          };
+
+          // dateFormatter(values.date);
+
           //   console.log("act", actions);
           // const sendData = {
           //   username: values.email,
@@ -141,6 +187,7 @@ export const FormPersonalData = () => {
               <div id="feedback">{props.errors.patronymic}</div>
             )}
             <SelectCategoryGender
+              name={"sex"}
               onChange={props.handleChange}
               className="wrapper-formPerson__select"
             />
@@ -158,6 +205,8 @@ export const FormPersonalData = () => {
                       name: "date",
                     },
                   };
+
+                  e.target.value = dateFormatter(e.target.value);
                   props.handleChange(e);
                 }}
                 closeOnSelect={true}
@@ -165,6 +214,7 @@ export const FormPersonalData = () => {
               <DateIcon className="wrapper-formPerson__iconDate" />
             </div>
             <SelectCategoryStatus
+              name={"personStatusId"}
               onChange={props.handleChange}
               data={listStatus}
               className="wrapper-formPerson__select"
@@ -177,8 +227,7 @@ export const FormPersonalData = () => {
                 placeholder="Страна"
                 className="wrapper-formPerson__control"
                 onChange={props.handleChange}
-                // value={props.values.country}
-                value={data.country}
+                value={props.values.country}
               />
               <ArrowSelect className="wrapper-formPerson__iconArrow" />
 
@@ -194,7 +243,7 @@ export const FormPersonalData = () => {
                 placeholder="Регион"
                 className="wrapper-formPerson__control"
                 onChange={props.handleChange}
-                value={data.region}
+                value={props.values.region}
               />
               <ArrowSelect className="wrapper-formPerson__iconArrow" />
 
@@ -210,7 +259,7 @@ export const FormPersonalData = () => {
                 placeholder="Город"
                 className="wrapper-formPerson__control"
                 onChange={props.handleChange}
-                value={data.city}
+                value={props.values.city}
               />
               <ArrowSelect className="wrapper-formPerson__iconArrow" />
               {props.errors.city && (

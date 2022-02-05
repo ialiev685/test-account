@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 //form
 import { Formik } from "formik";
+//context
+import { AuthContext } from "../hoc";
 //component
 import { EmailControl } from "../components/EmailControl";
 import { PasswordControl } from "../components/PasswordControl";
@@ -15,6 +17,8 @@ import "./styles.scss";
 import { API } from "../services";
 
 export const LoginView = () => {
+  const { signIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
   return (
     <Section>
@@ -22,7 +26,7 @@ export const LoginView = () => {
         <div className="wrapper-form">
           <div className="wrapper-form__title">
             <h2 className="wrapper-form__name">Авторизация</h2>
-            <Link className="wrapper-form__link" to="/">
+            <Link className="wrapper-form__link" to="/register">
               Регистрация
             </Link>
           </div>
@@ -45,10 +49,11 @@ export const LoginView = () => {
               const { data } = result;
 
               if (data) {
-                localStorage.setItem("token", data.token);
+                // localStorage.setItem("token", data.token);
+                const token = data.token;
                 actions.resetForm();
-
-                navigate("/home");
+                signIn(token);
+                // navigate("/home");
               }
             }}
           >

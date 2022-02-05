@@ -5,7 +5,7 @@ import { AuthContext } from "../hoc";
 import { Navigate } from "react-router-dom";
 
 export const PublicRoute = ({ components }) => {
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   // console.log("public", user);
 
   if (!user) {
