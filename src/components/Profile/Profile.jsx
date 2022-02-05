@@ -2,7 +2,7 @@ import React from "react";
 //style
 import "./Profile.scss";
 //component
-import { BoardPersonalData } from "../BoardPersonalData";
+import { BoardPersonalData, BoardPersonalSkills } from "../BoardPersonalData";
 
 export const Profile = ({ onModal, user }) => {
   return (
@@ -30,7 +30,8 @@ export const Profile = ({ onModal, user }) => {
           </button>
         </li>
       </ul>
-      <BoardPersonalData user={user} />
+      <BoardPersonalData onModal={onModal} user={user} />
+      <BoardPersonalSkills onModal={onModal} user={user} />
     </div>
   );
 };

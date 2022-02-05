@@ -10,10 +10,16 @@ const initSexList = [
   { id: 2, name: "Женщина" },
   { id: 3, name: "Другого не дано" },
 ];
+const initStatusList = [
+  { id: 1, name: "Школьник" },
+  { id: 2, name: "Студент" },
+  { id: 3, name: "Специалист" },
+  { id: 4, name: "Антрепренер" },
+];
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [listStatus, setListStatus] = useState([]);
+  const [listStatus, setListStatus] = useState(initStatusList);
   const [listSex] = useState(initSexList);
 
   const signOut = () => {

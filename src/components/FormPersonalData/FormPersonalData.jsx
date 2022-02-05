@@ -7,9 +7,12 @@ import { Formik } from "formik";
 import { ButtonSubmit } from "../ButtonSubmit";
 import { SelectCategoryGender } from "../SelectCategory";
 import { SelectCategoryStatus } from "../SelectCategory";
-import { PanelSearchNameCountry } from "../PanelSearchName";
-import { PanelSearchNameRegion } from "../PanelSearchName";
-import { PanelSearchNameCity } from "../PanelSearchName";
+import {
+  PanelSearchNameCountry,
+  PanelSearchNameRegion,
+  PanelSearchNameCity,
+} from "../PanelSearchName";
+
 //date
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
@@ -52,7 +55,7 @@ export const FormPersonalData = ({ user }) => {
         }
       });
     }
-  }, []);
+  }, [addListStatus]);
 
   const togglePanelSearchCountry = (name = "") => {
     setCurGetLocation(name);
@@ -133,13 +136,8 @@ export const FormPersonalData = ({ user }) => {
 
           const token = localStorage.getItem("token");
           if (token) {
-            console.log(dataSend);
             const result = await API.fetchUpdateProfile(token, dataSend);
-            console.log("result", result);
           }
-
-          // console.log("login", result);
-          // const { data } = result;
         }}
       >
         {(props) => (
