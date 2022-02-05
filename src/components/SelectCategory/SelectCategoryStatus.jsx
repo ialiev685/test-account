@@ -5,13 +5,7 @@ import "./SelectCategory.scss";
 import { ReactComponent as ArrowIcon } from "../../icons/arrowSelect.svg";
 
 export const SelectCategoryStatus = (props) => {
-  const {
-    value,
-    onChange,
-    id = "unknow",
-    name = "unknow",
-    className = "",
-  } = props;
+  const { value, onChange, data, name = "unknow", className = "" } = props;
 
   const [hiddenList, setHiddenList] = useState(true);
   const [currentValue, setCurrentValue] = useState({
@@ -59,7 +53,7 @@ export const SelectCategoryStatus = (props) => {
       target: {
         value: e.target.dataset.value,
         text: e.target.textContent,
-        id,
+
         name,
       },
     };
@@ -97,27 +91,18 @@ export const SelectCategoryStatus = (props) => {
         }`}
       >
         <ul className="select-category__list">
-          <li
-            className="select-category__item"
-            data-value={1}
-            onClick={handleChoose}
-          >
-            Школьник
-          </li>
-          <li
-            className="select-category__item"
-            data-value="2"
-            onClick={handleChoose}
-          >
-            Студент
-          </li>
-          <li
-            className="select-category__item"
-            data-value="3"
-            onClick={handleChoose}
-          >
-            Специалист
-          </li>
+          {data.map(({ id, name }) => {
+            return (
+              <li
+                key={id}
+                className="select-category__item"
+                data-value={id}
+                onClick={handleChoose}
+              >
+                {name}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

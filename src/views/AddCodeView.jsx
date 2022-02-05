@@ -7,6 +7,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { API } from "../services";
 //component
 import { Container } from "../components/Container";
+import { Section } from "../components/Section";
 
 export const AddCodeView = () => {
   const [code, setCode] = useState("");
@@ -42,20 +43,22 @@ export const AddCodeView = () => {
   }, [code, code.length, navigate, userId]);
 
   return (
-    <Container>
-      <div>
-        <h2>Введите код подтверждения</h2>
-        <p>Мы отправили письмо на {email}</p>
-        <NumberFormat
-          format="###-###"
-          placeholder="000-000"
-          onValueChange={(values) => {
-            // console.log("val", values);
-            const { formattedValue } = values;
-            setCode(formattedValue.trim());
-          }}
-        />
-      </div>
-    </Container>
+    <Section>
+      <Container>
+        <div>
+          <h2>Введите код подтверждения</h2>
+          <p>Мы отправили письмо на {email}</p>
+          <NumberFormat
+            format="###-###"
+            placeholder="000-000"
+            onValueChange={(values) => {
+              // console.log("val", values);
+              const { formattedValue } = values;
+              setCode(formattedValue.trim());
+            }}
+          />
+        </div>
+      </Container>
+    </Section>
   );
 };

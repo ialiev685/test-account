@@ -5,7 +5,7 @@ import "./SelectCategory.scss";
 import { ReactComponent as ArrowIcon } from "../../icons/arrowSelect.svg";
 
 export const SelectCategoryGender = (props) => {
-  const { value, onChange, id = "", name = "unknow", className = "" } = props;
+  const { value, onChange, name = "unknow", className = "" } = props;
 
   const [hiddenList, setHiddenList] = useState(true);
   const [currentValue, setCurrentValue] = useState({
@@ -53,7 +53,6 @@ export const SelectCategoryGender = (props) => {
       target: {
         value: e.target.dataset.value,
         text: e.target.textContent,
-        id,
         name,
       },
     };

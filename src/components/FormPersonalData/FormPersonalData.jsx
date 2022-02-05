@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+//api
+import { API } from "../../services";
 //form
 import { Formik } from "formik";
 //components
@@ -31,6 +33,16 @@ export const FormPersonalData = () => {
   const [showPanelSearchRegion, setShowPanelSearchRegion] = useState(false);
   const [showPanelSearchCity, setShowPanelSearchCity] = useState(false);
   const [curGetLocation, setCurGetLocation] = useState("");
+  const [listStatus, setListStatus] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      API.fetchGetListStatus(token).then((response) => {
+        if (response?.data) setListStatus(response.data);
+      });
+    }
+  }, []);
 
   const togglePanelSearchCountry = (name = "") => {
     setCurGetLocation(name);
@@ -128,7 +140,10 @@ export const FormPersonalData = () => {
             {props.errors.patronymic && (
               <div id="feedback">{props.errors.patronymic}</div>
             )}
-            <SelectCategoryGender className="wrapper-formPerson__select" />
+            <SelectCategoryGender
+              onChange={props.handleChange}
+              className="wrapper-formPerson__select"
+            />
             <div className="wrapper-formPerson__wrapperInput">
               <Datetime
                 dateFormat="DD.MM.YYYY"
@@ -149,7 +164,11 @@ export const FormPersonalData = () => {
               />
               <DateIcon className="wrapper-formPerson__iconDate" />
             </div>
-            <SelectCategoryStatus className="wrapper-formPerson__select" />
+            <SelectCategoryStatus
+              onChange={props.handleChange}
+              data={listStatus}
+              className="wrapper-formPerson__select"
+            />
             <div className="wrapper-formPerson__wrapperInput">
               <input
                 onClick={(e) => togglePanelSearchCountry(e.target.name)}

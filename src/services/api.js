@@ -2,6 +2,7 @@ const axios = require("axios");
 
 const BASE_URL = "https://test.it-planet.org/sso/";
 const BASE_URL_LOCAL = "https://test.it-planet.org/location/";
+const BASE_URL_USER = "https://test.it-planet.org/user/";
 
 const token = {
   set(token) {
@@ -85,13 +86,23 @@ export const fetchGetListCity = async (validToken, data) => {
   }
 };
 
+export const fetchGetProfile = async (validToken) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.get(`${BASE_URL_USER}profile/personal`);
+
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const fetchGetListStatus = async (validToken) => {
   try {
     token.set(validToken);
 
-    const result = await axios.get(
-      "https://test.it-planet.org/user/dict/person-status"
-    );
+    const result = await axios.get(`${BASE_URL_USER}dict/person-status`);
     return result;
   } catch (error) {
     console.log(error.message);
