@@ -9,7 +9,7 @@ export const Profile = ({ onModal, user }) => {
         {user.firstname} {user.lastname}
       </h2>
       <p className="profile__text">
-        {user.location.city ? user.location.city : "город неизвестен­"}
+        {user.location.city ? user.location.city.city : "город неизвестен­"}
       </p>
       <ul className="profile__list">
         <li className="profile__item">

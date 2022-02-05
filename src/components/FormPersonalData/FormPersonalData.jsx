@@ -25,12 +25,11 @@ const initDataPerson = {
   country: "",
   region: "",
   city: "",
-  countryId: "",
-  regionCode: "",
 };
 
 export const FormPersonalData = ({ user }) => {
   const [data, setData] = useState(initDataPerson);
+
   const [showPanelSearchCountry, setShowPanelSearchCountry] = useState(false);
   const [showPanelSearchRegion, setShowPanelSearchRegion] = useState(false);
   const [showPanelSearchCity, setShowPanelSearchCity] = useState(false);
@@ -54,18 +53,32 @@ export const FormPersonalData = ({ user }) => {
   };
   const togglePanelSearchRegion = (name = "") => {
     setCurGetLocation(name);
-    if (data.countryId) setShowPanelSearchRegion((prevState) => !prevState);
+    if (data.country.wikiDataId)
+      setShowPanelSearchRegion((prevState) => !prevState);
   };
   const togglePanelSearchCity = (name = "") => {
     setCurGetLocation(name);
-    setShowPanelSearchCity((prevState) => !prevState);
+    if (data.region.wikiDataId)
+      setShowPanelSearchCity((prevState) => !prevState);
   };
 
   const getDataLocation = (value) => {
-    const valueInput = Object.values(value)[0];
+    console.log("form", value);
+    let valueInput;
+    if (curGetLocation === "country") {
+      valueInput = Object.values(value)[2];
+    }
+
+    if (curGetLocation === "region") {
+      valueInput = Object.values(value)[3];
+    }
+
+    if (curGetLocation === "city") {
+      valueInput = Object.values(value)[4];
+    }
 
     formikRef.current.setFieldValue(curGetLocation, valueInput);
-    setData((prevState) => ({ ...prevState, ...value }));
+    setData((prevState) => ({ ...prevState, [curGetLocation]: value }));
   };
 
   const inputDateProps = {
@@ -96,56 +109,30 @@ export const FormPersonalData = ({ user }) => {
           console.log("val", values);
 
           const dataSend = {
-            firstname: "Jon",
-            lastname: "Snow",
-            patronymic: "",
-            sex: 1,
-            birthDate: "1905-06-21",
-            personStatusId: 1,
+            firstname: values.name,
+            lastname: values.surname,
+            patronymic: values.patronymic,
+            sex: values.sex,
+            birthDate: values.date,
+            personStatusId: values.personStatusId,
             languageCode: "RU",
             location: {
               languageCode: "RU",
-              country: {
-                code: "US",
-                currencyCodes: ["USD"],
-                name: "США",
-                wikiDataId: "Q30",
-              },
-              region: {
-                countryCode: "US",
-                fipsCode: "42",
-                isoCode: "PA",
-                name: "Пенсильвания",
-                wikiDataId: "Q1400",
-              },
-              city: {
-                id: 124815,
-                wikiDataId: "Q1134176",
-                type: "CITY",
-                city: "Калифорния",
-                name: "Калифорния",
-                regionCode: "PA",
-                countryCode: "Q30",
-              },
+              country: data.country,
+              region: data.region,
+              city: data.city,
             },
           };
 
-          // dateFormatter(values.date);
+          const token = localStorage.getItem("token");
+          if (token) {
+            console.log(dataSend);
+            const result = await API.fetchUpdateProfile(token, dataSend);
+            console.log("result", result);
+          }
 
-          //   console.log("act", actions);
-          // const sendData = {
-          //   username: values.email,
-          //   password: values.password,
-          // };
-          // console.log("sendData", sendData);
-          // const result = await API.fetchLogin(sendData);
           // console.log("login", result);
           // const { data } = result;
-          // if (data) {
-          //   localStorage.setItem("token", JSON.stringify(data.token));
-          //   actions.resetForm();
-          //   navigate("/home");
-          // }
         }}
       >
         {(props) => (

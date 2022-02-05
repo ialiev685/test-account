@@ -31,7 +31,9 @@ export const Home = () => {
             width="25"
             height="25"
           />
-          <span className="home__title">{user.login}</span>
+          <span className="home__title">
+            {user.login ? user.login : "unknow"}
+          </span>
           <button className="home__buttonExit" onClick={() => signOut()}>
             Выйти
           </button>

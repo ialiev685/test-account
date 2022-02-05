@@ -98,6 +98,18 @@ export const fetchGetProfile = async (validToken) => {
   }
 };
 
+export const fetchUpdateProfile = async (validToken, data) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.put(`${BASE_URL_USER}profile/personal`, data);
+
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const fetchGetListStatus = async (validToken) => {
   try {
     token.set(validToken);

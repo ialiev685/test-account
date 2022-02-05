@@ -12,7 +12,7 @@ import { API } from "../../services";
 const debounce = require("lodash.debounce");
 
 export const PanelSearchNameCountry = (props) => {
-  const { onShow, getDataLocation, curGetLocation, infoLocation } = props;
+  const { onShow, getDataLocation, curGetLocation } = props;
 
   const [query, setQuery] = useState("");
   const [token, setToken] = useState("");
@@ -54,13 +54,16 @@ export const PanelSearchNameCountry = (props) => {
   };
 
   const handleChoose = (e) => {
-    const value = e.target.textContent.trim();
+    // const value = e.target.textContent.trim();
     const id = e.target.dataset.id;
-    const dataLocation = {
-      [curGetLocation]: value,
-      countryId: id,
-    };
-    getDataLocation(dataLocation);
+    // const dataLocation = {
+    //   [curGetLocation]: value,
+    //   countryId: id,
+    // };
+
+    const dataSend = data.find(({ wikiDataId }) => wikiDataId === id);
+    // getDataLocation(dataLocation);
+    getDataLocation(dataSend);
     onShow();
   };
 

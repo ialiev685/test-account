@@ -24,8 +24,8 @@ export const PanelSearchNameCity = (props) => {
       const queryData = {
         name: value,
         languageCode: "RU",
-        countryId: infoLocation.countryId,
-        regionCode: infoLocation.regionCode,
+        countryId: infoLocation.country.wikiDataId,
+        regionCode: infoLocation.region.wikiDataId,
       };
 
       API.fetchGetListCity(token, queryData).then((response) => {
@@ -57,12 +57,14 @@ export const PanelSearchNameCity = (props) => {
   };
 
   const handleChoose = (e) => {
-    const value = e.target.textContent.trim();
-
-    const dataLocation = {
-      [curGetLocation]: value,
-    };
-    getDataLocation(dataLocation);
+    // const value = e.target.textContent.trim();
+    const id = e.target.dataset.id;
+    // const dataLocation = {
+    //   [curGetLocation]: value,
+    // };
+    // getDataLocation(dataLocation);
+    const dataSend = data.find(({ wikiDataId }) => wikiDataId === id);
+    getDataLocation(dataSend);
     onShow();
   };
 

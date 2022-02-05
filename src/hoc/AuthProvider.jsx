@@ -18,6 +18,10 @@ export const AuthProvider = ({ children }) => {
     fetchGetProfile(token);
   };
 
+  const updateUser = (data) => {
+    setUser(data);
+  };
+
   const fetchGetProfile = (token) => {
     API.fetchGetProfile(token).then((response) => {
       if (response?.data) {
@@ -38,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const value = { user, signOut, signIn };
+  const value = { user, signOut, signIn, updateUser };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
