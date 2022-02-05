@@ -5,8 +5,16 @@ import { API } from "../services";
 //context
 export const AuthContext = createContext(null);
 
+const initSexList = [
+  { id: 1, name: "Мужчина" },
+  { id: 2, name: "Женщина" },
+  { id: 3, name: "Другого не дано" },
+];
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [listStatus, setListStatus] = useState([]);
+  const [listSex] = useState(initSexList);
 
   const signOut = () => {
     localStorage.removeItem("token");
@@ -22,6 +30,10 @@ export const AuthProvider = ({ children }) => {
     setUser(data);
   };
 
+  const addListStatus = (data) => {
+    setListStatus(data);
+  };
+
   const fetchGetProfile = (token) => {
     API.fetchGetProfile(token).then((response) => {
       if (response?.data) {
@@ -33,16 +45,19 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      //   API.fetchGetProfile(token).then((response) => {
-      //     if (response?.data) {
-      //       setUser(response.data);
-      //     }
-      //   });
       fetchGetProfile(token);
     }
   }, []);
 
-  const value = { user, signOut, signIn, updateUser };
+  const value = {
+    user,
+    signOut,
+    signIn,
+    updateUser,
+    addListStatus,
+    listSex,
+    listStatus,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

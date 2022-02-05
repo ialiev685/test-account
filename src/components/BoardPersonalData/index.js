@@ -1,0 +1,1 @@
+export { BoardPersonalData } from "./BoardPersonalData";

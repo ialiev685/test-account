@@ -1,6 +1,8 @@
 import React from "react";
 //style
 import "./Profile.scss";
+//component
+import { BoardPersonalData } from "../BoardPersonalData";
 
 export const Profile = ({ onModal, user }) => {
   return (
@@ -28,6 +30,7 @@ export const Profile = ({ onModal, user }) => {
           </button>
         </li>
       </ul>
+      <BoardPersonalData user={user} />
     </div>
   );
 };

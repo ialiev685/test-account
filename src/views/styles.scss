@@ -97,8 +97,6 @@
     align-items: center;
     justify-content: space-between;
 
-    width: 140px;
-
     margin-left: 190px;
   }
 
@@ -127,5 +125,10 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 1;
+  }
+
+  &__title,
+  &__buttonExit {
+    margin-left: 5px;
   }
 }

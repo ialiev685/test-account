@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 //api
 import { API } from "../../services";
 //form
@@ -20,6 +20,8 @@ import { ReactComponent as ArrowSelect } from "../../icons/arrowSelect.svg";
 import "./FormPersonalData.scss";
 //helpers
 import { dateFormatter } from "../../helpers/dateFormatter";
+//context
+import { AuthContext } from "../../hoc";
 
 const initDataPerson = {
   country: "",
@@ -38,11 +40,16 @@ export const FormPersonalData = ({ user }) => {
 
   const formikRef = useRef();
 
+  const { addListStatus } = useContext(AuthContext);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       API.fetchGetListStatus(token).then((response) => {
-        if (response?.data) setListStatus(response.data);
+        if (response?.data) {
+          setListStatus(response.data);
+          addListStatus(response.data);
+        }
       });
     }
   }, []);

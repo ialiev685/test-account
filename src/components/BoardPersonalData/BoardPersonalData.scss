@@ -1,0 +1,59 @@
+.presonal-data {
+  border: 1px solid rgba(160, 168, 200, 0.5);
+  border-radius: 10px;
+
+  padding: 15px;
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.12;
+    letter-spacing: 0.02em;
+
+    color: #818697;
+
+    margin-bottom: 10px;
+  }
+  &__title,
+  &__location {
+    margin-bottom: 10px;
+  }
+
+  &__location {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.37;
+
+    color: #1f1a2d;
+
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  &__country,
+  &__city {
+    display: flex;
+    align-items: center;
+  }
+
+  &__countryName,
+  &__cityName {
+    margin-left: 10px;
+  }
+
+  &__data {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    color: #1f1a2d;
+  }
+
+  &__data:not(:first-child) {
+    margin-left: 20px;
+  }
+}

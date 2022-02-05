@@ -10,7 +10,7 @@ import { ButtonSubmit } from "../components/ButtonSubmit";
 import { Container } from "../components/Container";
 import { Section } from "../components/Section";
 //router
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 //style
 import "./styles.scss";
 //api
@@ -19,7 +19,6 @@ import { API } from "../services";
 export const LoginView = () => {
   const { signIn } = useContext(AuthContext);
 
-  const navigate = useNavigate();
   return (
     <Section>
       <Container>
@@ -53,7 +52,6 @@ export const LoginView = () => {
                 const token = data.token;
                 actions.resetForm();
                 signIn(token);
-                // navigate("/home");
               }
             }}
           >
