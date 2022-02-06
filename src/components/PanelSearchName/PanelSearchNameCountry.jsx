@@ -12,7 +12,7 @@ import { API } from "../../services";
 const debounce = require("lodash.debounce");
 
 export const PanelSearchNameCountry = (props) => {
-  const { onShow, getDataLocation, curGetLocation } = props;
+  const { onShow, getDataLocation } = props;
 
   const [query, setQuery] = useState("");
   const [token, setToken] = useState("");
@@ -27,10 +27,12 @@ export const PanelSearchNameCountry = (props) => {
       };
 
       API.fetchGetListCountry(token, queryData).then((response) => {
-        const { data } = response.data;
-        setData(data);
+        if (response?.data) {
+          const { data } = response.data;
+          setData(data);
+        }
       });
-    }, 1000),
+    }, 800),
     []
   );
 
@@ -72,6 +74,7 @@ export const PanelSearchNameCountry = (props) => {
       <div className="panel-search">
         <div className="panel-search__header">
           <input
+            autoFocus={true}
             autoComplete="off"
             placeholder="Введите страну"
             type="text"

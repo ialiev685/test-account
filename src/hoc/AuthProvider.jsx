@@ -33,19 +33,33 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (data) => {
-    setUser(data);
-  };
-
-  const addListStatus = (data) => {
-    setListStatus(data);
-  };
-
-  const fetchGetProfile = (token) => {
+    // setUser(data);
+    const token = localStorage.getItem("token");
     API.fetchGetProfile(token).then((response) => {
       if (response?.data) {
         setUser(response.data);
       }
     });
+  };
+
+  // const fetchGetProfile = (token) => {
+  //   API.fetchGetProfile(token).then((response) => {
+  //     if (response?.data) {
+  //       setUser(response.data);
+  //       API.fetchGetListStatus(token).then((response) => {
+  //         setListStatus(response.data);
+  //       });
+  //     }
+  //   });
+  // };
+
+  const fetchGetProfile = async (token) => {
+    const resultProfile = await API.fetchGetProfile(token);
+    if (resultProfile?.data) {
+      const resultStatus = await API.fetchGetListStatus(token);
+      setUser(resultProfile.data);
+      setListStatus(resultStatus.data);
+    }
   };
 
   useEffect(() => {
@@ -60,7 +74,6 @@ export const AuthProvider = ({ children }) => {
     signOut,
     signIn,
     updateUser,
-    addListStatus,
     listSex,
     listStatus,
   };

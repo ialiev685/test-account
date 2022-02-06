@@ -8,7 +8,7 @@ import { ReactComponent as ArrowIcon } from "../../icons/arrow.svg";
 
 const modalRoot = document.getElementById("modal-root");
 
-export const Modal = ({ onModal, children }) => {
+export const Modal = ({ onModal, children, title }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.code === "Escape") {
@@ -35,7 +35,7 @@ export const Modal = ({ onModal, children }) => {
             <ArrowIcon className="iconClose" />
             Закрыть
           </button>
-          <h3 className="modal__title">Личные данные</h3>
+          <h3 className="modal__title">{title}</h3>
         </div>
         <div className="modal__body">{children}</div>
       </div>

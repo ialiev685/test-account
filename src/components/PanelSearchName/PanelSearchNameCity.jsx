@@ -29,11 +29,12 @@ export const PanelSearchNameCity = (props) => {
       };
 
       API.fetchGetListCity(token, queryData).then((response) => {
-        const { data } = response.data;
-
-        setData(data);
+        if (response?.data) {
+          const { data } = response.data;
+          setData(data);
+        }
       });
-    }, 1000),
+    }, 800),
     []
   );
 
@@ -73,8 +74,9 @@ export const PanelSearchNameCity = (props) => {
       <div className="panel-search">
         <div className="panel-search__header">
           <input
+            autoFocus={true}
             autoComplete="off"
-            placeholder="Введите страну"
+            placeholder="Введите город"
             type="text"
             className="panel-search__control"
             value={query}

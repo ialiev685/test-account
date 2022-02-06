@@ -1,4 +1,12 @@
 .wrapper-formPerson {
+  &__name {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+
+    color: #1f1a2d;
+  }
   &__input,
   &__control {
     height: 54px;
@@ -21,7 +29,8 @@
   &__input,
   &__wrapperInput,
   &__select,
-  &__text {
+  &__text,
+  &__name {
     margin-bottom: 10px;
   }
 
@@ -56,6 +65,41 @@
     transform: rotate(-90deg);
 
     pointer-events: none;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    padding: 5px 10px;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  &__item:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  &__itemName {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    color: #1f1a2d;
+  }
+
+  &__itemIcon {
+    margin-left: 10px;
+
+    cursor: pointer;
   }
   // &__input.wrapper-formPerson__input--bold::placeholder {
   //   font-weight: 800;

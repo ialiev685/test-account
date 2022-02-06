@@ -25,7 +25,7 @@ export const Profile = ({ onModal, user }) => {
           </button>
         </li>
         <li className="profile__item">
-          <button className="buttonProfile" onClick={onModal}>
+          <button className="buttonProfile" onClick={() => onModal("skills")}>
             Навыки
           </button>
         </li>

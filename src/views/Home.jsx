@@ -4,7 +4,10 @@ import { Container } from "../components/Container";
 import { Navigation } from "../components/Navigation";
 import { Profile } from "../components/Profile";
 import { Modal } from "../components/Modal";
-import { FormPersonalData } from "../components/FormPersonalData";
+import {
+  FormPersonalData,
+  FormPersonalSkills,
+} from "../components/FormPersonalData";
 //context
 import { AuthContext } from "../hoc";
 //style
@@ -12,10 +15,13 @@ import "./styles.scss";
 
 export const Home = () => {
   const [showModal, setShowModal] = useState(false);
+  const [callForm, setCallForm] = useState("");
 
   const { user, signOut } = useContext(AuthContext);
   console.log("home", user);
-  const toggleModal = () => {
+
+  const toggleModal = (name = "") => {
+    setCallForm(name);
     setShowModal((prevState) => !prevState);
   };
 
@@ -46,8 +52,15 @@ export const Home = () => {
         </Container>
       </div>
       {showModal && (
-        <Modal onModal={toggleModal}>
-          <FormPersonalData user={user} />
+        <Modal
+          onModal={toggleModal}
+          title={callForm === "skills" ? "Навыки" : "Личные данные"}
+        >
+          {callForm === "skills" ? (
+            <FormPersonalSkills user={user} />
+          ) : (
+            <FormPersonalData user={user} />
+          )}
         </Modal>
       )}
     </div>

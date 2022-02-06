@@ -28,10 +28,12 @@ export const PanelSearchNameRegion = (props) => {
       };
 
       API.fetchGetListRegion(token, queryData).then((response) => {
-        const { data } = response.data;
-        setData(data);
+        if (response?.data) {
+          const { data } = response.data;
+          setData(data);
+        }
       });
-    }, 1000),
+    }, 800),
     []
   );
 
@@ -75,8 +77,9 @@ export const PanelSearchNameRegion = (props) => {
       <div className="panel-search">
         <div className="panel-search__header">
           <input
+            autoFocus={true}
             autoComplete="off"
-            placeholder="Введите страну"
+            placeholder="Введите регион"
             type="text"
             className="panel-search__control"
             value={query}

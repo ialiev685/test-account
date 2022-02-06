@@ -120,3 +120,37 @@ export const fetchGetListStatus = async (validToken) => {
     console.log(error.message);
   }
 };
+
+//fetchGetListSkills
+export const fetchGetListSkills = async (validToken, name) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.get(`${BASE_URL_USER}skill/?name=${name}`);
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchAddSkill = async (validToken, data) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.post(`${BASE_URL_USER}skill`, data);
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const fetchDeleteSkill = async (validToken, id) => {
+  try {
+    token.set(validToken);
+
+    const result = await axios.delete(`${BASE_URL_USER}skill/${id}`);
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};

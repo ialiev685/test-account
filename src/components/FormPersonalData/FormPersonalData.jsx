@@ -51,11 +51,10 @@ export const FormPersonalData = ({ user }) => {
       API.fetchGetListStatus(token).then((response) => {
         if (response?.data) {
           setListStatus(response.data);
-          addListStatus(response.data);
         }
       });
     }
-  }, [addListStatus]);
+  }, []);
 
   const togglePanelSearchCountry = (name = "") => {
     setCurGetLocation(name);
@@ -73,7 +72,6 @@ export const FormPersonalData = ({ user }) => {
   };
 
   const getDataLocation = (value) => {
-    console.log("form", value);
     let valueInput;
     if (curGetLocation === "country") {
       valueInput = Object.values(value)[2];

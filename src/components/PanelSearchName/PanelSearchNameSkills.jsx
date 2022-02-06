@@ -12,30 +12,28 @@ import { API } from "../../services";
 const debounce = require("lodash.debounce");
 
 export const PanelSearchNameSkills = (props) => {
-  const { onShow, getDataLocation, curGetLocation } = props;
+  const { onShow, getDataLocation } = props;
 
   const [query, setQuery] = useState("");
   const [token, setToken] = useState("");
   const [data, setData] = useState([]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchListCountry = useCallback(
+  const fetchListSkills = useCallback(
     debounce((value) => {
-      const queryData = {
-        name: value,
-        languageCode: "RU",
-      };
-
-      API.fetchGetListCountry(token, queryData).then((response) => {
-        const { data } = response.data;
-        setData(data);
+      API.fetchGetListSkills(token, value).then((response) => {
+        if (response?.data) {
+          const { skills } = response.data;
+          setData(skills);
+        }
       });
-    }, 1000),
-    []
+    }, 800),
+    [token]
   );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (token) {
       setToken(token);
     }
@@ -43,9 +41,9 @@ export const PanelSearchNameSkills = (props) => {
 
   useEffect(() => {
     if (query && token) {
-      fetchListCountry(query);
+      fetchListSkills(query);
     }
-  }, [fetchListCountry, query, token]);
+  }, [fetchListSkills, query, token]);
 
   const handleBackdropClick = (e) => {
     if (e.currentTarget === e.target) {
@@ -55,16 +53,17 @@ export const PanelSearchNameSkills = (props) => {
 
   const handleChoose = (e) => {
     // const value = e.target.textContent.trim();
-    const id = e.target.dataset.id;
+    const idItem = Number(e.target.dataset.id);
     // const dataLocation = {
     //   [curGetLocation]: value,
     //   countryId: id,
     // };
 
-    const dataSend = data.find(({ wikiDataId }) => wikiDataId === id);
+    const dataSend = data.find(({ id }) => id === idItem);
     // getDataLocation(dataLocation);
+
     getDataLocation(dataSend);
-    onShow();
+    onShow("skills");
   };
 
   return (
@@ -72,8 +71,9 @@ export const PanelSearchNameSkills = (props) => {
       <div className="panel-search">
         <div className="panel-search__header">
           <input
+            autoFocus={true}
             autoComplete="off"
-            placeholder="Введите страну"
+            placeholder="Введите навык"
             type="text"
             className="panel-search__control"
             value={query}
@@ -86,13 +86,13 @@ export const PanelSearchNameSkills = (props) => {
         </div>
         <div className="panel-search__body">
           <ul className="panel-search__list">
-            {data.map(({ wikiDataId, name }) => {
+            {data.map(({ id, name }) => {
               return (
                 <li
                   className="panel-search__item"
-                  key={wikiDataId}
+                  key={id}
                   onClick={handleChoose}
-                  data-id={wikiDataId}
+                  data-id={id}
                 >
                   {name}
                 </li>
