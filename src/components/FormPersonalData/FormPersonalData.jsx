@@ -32,7 +32,7 @@ const initDataPerson = {
   city: "",
 };
 
-export const FormPersonalData = ({ user }) => {
+export const FormPersonalData = ({ user, onShowModal }) => {
   const [data, setData] = useState(initDataPerson);
 
   const [showPanelSearchCountry, setShowPanelSearchCountry] = useState(false);
@@ -43,7 +43,7 @@ export const FormPersonalData = ({ user }) => {
 
   const formikRef = useRef();
 
-  const { addListStatus } = useContext(AuthContext);
+  const { updateUser } = useContext(AuthContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -78,6 +78,7 @@ export const FormPersonalData = ({ user }) => {
     }
 
     if (curGetLocation === "region") {
+      console.log("region", value);
       valueInput = Object.values(value)[3];
     }
 
@@ -114,8 +115,6 @@ export const FormPersonalData = ({ user }) => {
           city: "",
         }}
         onSubmit={async (values, actions) => {
-          console.log("val", values);
-
           const dataSend = {
             firstname: values.name,
             lastname: values.surname,
@@ -135,6 +134,10 @@ export const FormPersonalData = ({ user }) => {
           const token = localStorage.getItem("token");
           if (token) {
             const result = await API.fetchUpdateProfile(token, dataSend);
+            if (result?.data) {
+              updateUser();
+              onShowModal();
+            }
           }
         }}
       >

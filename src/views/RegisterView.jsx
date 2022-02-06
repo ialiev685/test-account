@@ -1,8 +1,9 @@
 import React from "react";
+//yap
+import * as Yup from "yup";
 //форма
 import { Formik } from "formik";
-//styles
-import "./styles.scss";
+
 //api
 import { API } from "../services";
 //router
@@ -14,6 +15,14 @@ import { RepeatPasswordControl } from "../components/RepeatPasswordControl";
 import { ButtonSubmit } from "../components/ButtonSubmit";
 import { Container } from "../components/Container";
 import { Section } from "../components/Section";
+//styles
+import "./styles.scss";
+
+const validation = Yup.object({
+  email: Yup.string().email().required(),
+  password: Yup.mixed().required(),
+  repeatPassword: Yup.mixed().required(),
+});
 
 export const RegisterView = () => {
   const navigate = useNavigate();
@@ -36,6 +45,7 @@ export const RegisterView = () => {
               mailing: false,
               dataProcessing: false,
             }}
+            validationSchema={validation}
             onSubmit={async (values, actions) => {
               // console.log("val", values);
               //   console.log("act", actions);

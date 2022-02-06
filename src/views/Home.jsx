@@ -18,7 +18,6 @@ export const Home = () => {
   const [callForm, setCallForm] = useState("");
 
   const { user, signOut } = useContext(AuthContext);
-  console.log("home", user);
 
   const toggleModal = (name = "") => {
     setCallForm(name);
@@ -57,9 +56,9 @@ export const Home = () => {
           title={callForm === "skills" ? "Навыки" : "Личные данные"}
         >
           {callForm === "skills" ? (
-            <FormPersonalSkills user={user} />
+            <FormPersonalSkills onShowModal={toggleModal} user={user} />
           ) : (
-            <FormPersonalData user={user} />
+            <FormPersonalData onShowModal={toggleModal} user={user} />
           )}
         </Modal>
       )}

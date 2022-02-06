@@ -20,13 +20,12 @@ export const Profile = ({ onModal, user }) => {
       <ButtonShowProfileData
         stateShowDetalis={showDetalis}
         statusEmpty={noEmptyProfile}
-        // className={noEmptyProfile}
         onShowDetalis={setShowDetalis}
       />
       {showDetalis && (
         <ul className="profile__list">
           <li className="profile__item">
-            {user.location === null ? (
+            {user.location.country === null ? (
               <button className="buttonProfile" onClick={onModal}>
                 Личные данные
               </button>

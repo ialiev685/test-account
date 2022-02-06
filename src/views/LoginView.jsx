@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
+//yap
+import * as Yup from "yup";
 //form
 import { Formik } from "formik";
+
 //context
 import { AuthContext } from "../hoc";
 //component
@@ -15,6 +18,11 @@ import { Link } from "react-router-dom";
 import "./styles.scss";
 //api
 import { API } from "../services";
+
+const validation = Yup.object({
+  email: Yup.string().email().required(),
+  password: Yup.mixed().required(),
+});
 
 export const LoginView = () => {
   const { signIn } = useContext(AuthContext);
@@ -34,6 +42,7 @@ export const LoginView = () => {
               email: "",
               password: "",
             }}
+            validationSchema={validation}
             onSubmit={async (values, actions) => {
               //   console.log("val", values);
               //   console.log("act", actions);

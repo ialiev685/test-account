@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
+//yap
+import * as Yup from "yup";
 //форма
 import { Formik } from "formik";
 //router
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 //api
 import { API } from "../services";
 //component
 import { Container } from "../components/Container";
 import { Section } from "../components/Section";
+import { ButtonSubmit } from "../components/ButtonSubmit";
+
+const validation = Yup.object({
+  firstname: Yup.string().min(2).required(),
+  lastname: Yup.string().min(2).required(),
+  login: Yup.string().min(2).required(),
+});
 
 export const ActivationProfileView = () => {
   const [confirmData, setConfirmData] = useState({});
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { userId, confirmationCode } = location.state;
@@ -22,8 +32,8 @@ export const ActivationProfileView = () => {
   return (
     <Section>
       <Container>
-        <div className="wrapper-register">
-          <h1>Анкета</h1>
+        <div className="wrapper-activation">
+          <h1 className="wrapper-activation__title">Анкета</h1>
 
           <Formik
             initialValues={{
@@ -31,6 +41,7 @@ export const ActivationProfileView = () => {
               lastname: "",
               login: "",
             }}
+            validationSchema={validation}
             onSubmit={async (values, actions) => {
               //   console.log("val", values);
               //   console.log("act", actions);
@@ -42,24 +53,24 @@ export const ActivationProfileView = () => {
                 login: values.login,
                 confirmationCode: confirmData.confirmationCode,
               };
-              console.log("send data", sendData);
+
               const result = await API.fetchActivateProfile(sendData);
               const { data } = result;
-              console.log("activation:", data);
 
-              // actions.resetForm();
+              actions.resetForm();
 
-              //   navigate(`/add-code/${data.id}`, { state: { email: values.email } });
+              navigate("/login");
             }}
           >
             {(props) => (
               <form
                 onSubmit={props.handleSubmit}
-                className="wrapper-register__form"
+                className="wrapper-activation__form"
               >
                 <input
                   autoComplete="off"
-                  className="wrapper-register__control"
+                  className="wrapper-activation__input"
+                  placeholder="Имя"
                   type="text"
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
@@ -71,7 +82,8 @@ export const ActivationProfileView = () => {
                 )}
                 <input
                   autoComplete="off"
-                  className="wrapper-register__control"
+                  placeholder="Фамилия"
+                  className="wrapper-activation__input"
                   type="text"
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
@@ -83,7 +95,8 @@ export const ActivationProfileView = () => {
                 )}
                 <input
                   autoComplete="off"
-                  className="wrapper-register__control"
+                  placeholder="Логин"
+                  className="wrapper-activation__input"
                   type="text"
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
@@ -93,10 +106,7 @@ export const ActivationProfileView = () => {
                 {props.errors.login && (
                   <div id="feedback">{props.errors.login}</div>
                 )}
-
-                <button className="wrapper-register__button" type="submit">
-                  Сохранить
-                </button>
+                <ButtonSubmit caption={"Активировать"} />
               </form>
             )}
           </Formik>
