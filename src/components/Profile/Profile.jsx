@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //style
 import "./Profile.scss";
 //component
 import { BoardPersonalData, BoardPersonalSkills } from "../BoardPersonalData";
+import { ButtonShowProfileData } from "../ButtonShowProfileData";
 
 export const Profile = ({ onModal, user }) => {
+  const [showDetalis, setShowDetalis] = useState(true);
+  const noEmptyProfile = user.skills.length && user.location;
+
   return (
     <div className="profile">
       <h2 className="profile__title">
@@ -13,25 +17,37 @@ export const Profile = ({ onModal, user }) => {
       <p className="profile__text">
         {user.location.city ? user.location.city.city : "город неизвестен­"}
       </p>
-      <ul className="profile__list">
-        <li className="profile__item">
-          <button className="buttonProfile buttonProfile--skills">
-            Заполните профиль
-          </button>
-        </li>
-        <li className="profile__item">
-          <button className="buttonProfile" onClick={onModal}>
-            Личные данные
-          </button>
-        </li>
-        <li className="profile__item">
-          <button className="buttonProfile" onClick={() => onModal("skills")}>
-            Навыки
-          </button>
-        </li>
-      </ul>
-      <BoardPersonalData onModal={onModal} user={user} />
-      <BoardPersonalSkills onModal={onModal} user={user} />
+      <ButtonShowProfileData
+        stateShowDetalis={showDetalis}
+        statusEmpty={noEmptyProfile}
+        // className={noEmptyProfile}
+        onShowDetalis={setShowDetalis}
+      />
+      {showDetalis && (
+        <ul className="profile__list">
+          <li className="profile__item">
+            {user.location === null ? (
+              <button className="buttonProfile" onClick={onModal}>
+                Личные данные
+              </button>
+            ) : (
+              <BoardPersonalData onModal={onModal} user={user} />
+            )}
+          </li>
+          <li className="profile__item">
+            {user.skills.length === 0 ? (
+              <button
+                className="buttonProfile"
+                onClick={() => onModal("skills")}
+              >
+                Навыки
+              </button>
+            ) : (
+              <BoardPersonalSkills onModal={onModal} user={user} />
+            )}
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
